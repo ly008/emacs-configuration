@@ -110,8 +110,8 @@ See 'git help config' and search for 'push.default' for further information.
 (the 'simple' mode was introduced in Git 1.7.11. Use the similar mode
 'current' instead of 'simple' if you sometimes use older versions of Git)
 
-Username for 'https://github.com': ly008
-Password for 'https://ly008@github.com': github@015
+Username for 'https://github.com': ******
+Password for 'https://ly008@github.com': ******
 
 Counting objects: 3, done.
 Delta compression using up to 8 threads.
