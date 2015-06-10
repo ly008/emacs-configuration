@@ -1,0 +1,123 @@
+* setting up git config
+envy@envy-home-2015:~/.emacs.d$ git config --global user.name "ly008"
+envy@envy-home-2015:~/.emacs.d$ git config --global user.email "ly19820701@163.com"
+envy@envy-home-2015:~/.emacs.d$ git config --global color.ui auto
+* clone my project to local from github
+envy@envy-home-2015:~/.emacs.d$ git clone https://github.com/ly008/emacs-configuration.git
+Cloning into 'emacs-configuration'...
+remote: Counting objects: 6, done.        
+remote: Compressing objects: 100% (3/3), done.        
+remote: Total 6 (delta 0), reused 0 (delta 0), pack-reused 0        
+Unpacking objects: 100% (6/6), done.
+Checking connectivity... done.
+envy@envy-home-2015:~/.emacs.d$ ls
+auto-save-list
+color-theme-6.6.0
+color-theme-6.6.0.tar.gz
+emacs-configuration
+init.el
+init.el~
+init.el.~1~
+init.el.~2~
+session.102697b200b53700fa142305741878494300000038600035
+session.1071ee0c29fea87ac3141303979937529100000035620035
+session.10da6557af781f54d6142616689930544600000037180040
+session.10dfaf7ee33690b50e141865721024233100000041940034
+session.10eab5e4a19377e096141735060418442800000041520043
+session.10f86337782e652222141758984568959800000041560036
+envy@envy-home-2015:~/.emacs.d$ cd emacs-configuration/
+envy@envy-home-2015:~/.emacs.d/emacs-configuration$ ls
+README.md
+* check reposity status & add file to repository
+envy@envy-home-2015:~/.emacs.d/emacs-configuration$git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+nothing to commit, working directory clean
+envy@envy-home-2015:~/.emacs.d/emacs-configuration$ cp ../init.el ./
+envy@envy-home-2015:~/.emacs.d/emacs-configuration$ git add init.el 
+envy@envy-home-2015:~/.emacs.d/emacs-configuration$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+	new file:   init.el
+
+* gen ssh-key
+envy@envy-home-2015:~/.emacs.d/emacs-configuration$ ssh-keygen -t rsa -b 4096 -C "ly19820701@163.com"
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/envy/.ssh/id_rsa): 
+/home/envy/.ssh/id_rsa already exists.
+Overwrite (y/n)? y
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in /home/envy/.ssh/id_rsa.
+Your public key has been saved in /home/envy/.ssh/id_rsa.pub.
+The key fingerprint is:
+33:84:b6:47:49:8e:3a:d6:27:7c:80:61:c1:f9:1f:80 ly19820701@163.com
+The key's randomart image is:
++---[RSA 4096]----+
+|   .++  .        |
+|   .Eo.= .       |
+|    ..=.=        |
+|     =.=.        |
+|    + =.S.       |
+|   . . =.o       |
+|                 |
+|                 |
+|                 |
++-----------------+
+* start up ssh-agent
+envy@envy-home-2015:~/.emacs.d/emacs-configuration$ eval "$(ssh-agent -s)"
+Agent pid 12671
+envy@envy-home-2015:~/.emacs.d/emacs-configuration$ ps -ef|grep ssh-agent
+envy     12671  1692  0 22:22 ?        00:00:00 ssh-agent -s
+envy     12675 11523  0 22:23 pts/21   00:00:00 grep ssh-agent
+* add ssh-key to ssh-agent
+envy@envy-home-2015:~/.emacs.d/emacs-configuration$ ssh-add ~/.ssh/id_rsa
+Enter passphrase for /home/envy/.ssh/id_rsa: 
+Identity added: /home/envy/.ssh/id_rsa (/home/envy/.ssh/id_rsa)
+envy@envy-home-2015:~/.emacs.d/emacs-configuration$ cat ~/.ssh/id_rsa.pub 
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCusOoRWQoGDFG6oH3YUwAxRlOi4xvHClhsTHFlZ64rR76NGG2rsSig7KhMCykCOmS7OIUSk2x3C9tZxkjhEroEW0mhb5qeamlVfAI/A6igUcOvp/L7P63G6HNekhNZcST6WiT5ntYZ6v76FlEwjOkLJeXlcjKfOqi3NDjd9PiGsWPZkkfttgghRLsOJWXfSSU74xE/PaeiO/w5va3zjmOiKqC1DpEX/3Ahh+gC3X7yafGK2FE2gKE0G2AZOHNXZ7L6APMtgINU4eCInghsCPDMiVYRvdXj6/7ZyONZJ+ij13AzWra62VAH3iK2/g3iWV6qRJZQgKTBGF6nljbKAuMmVnUTUpEMefOFfsBwUxwQXGP8R9lxZ/iG4a3v46DavQ+pEQeycXu8hqAX6qksGF1DNvJALiceuws/G0mjGlpXPECcuGM2dtqsK1QIL/sAmJjU36/5I3f3jMyUVZrhgJ+jNik/of90cLNnS2ViDEYy1BetxKb+LegL5vp2s7vNw6+6BfYNnyfjw4XqUko/gCVAGur9usHQuWBVabXfXzn6hkubd5WbsJ/wtang+soRUBZklU0JCQErWi/wkc9uM2MXaEpNM2ODs7Ip6zqpBdUsHalKcJYbdLtcF4wVU0nlKnZbSk1KDS4ImVmHt1OC5CyybAv0otuMaOOEMVtTAfqaUw== ly19820701@163.com
+
+* add ssh-key to github user setting ssh-key configuration
+
+* check github ssh connection
+envy@envy-home-2015:~/.emacs.d/emacs-configuration$ ssh -T git@github.com
+Warning: Permanently added the RSA host key for IP address '192.30.252.128' to the list of known hosts.
+Hi ly008! You've successfully authenticated, but GitHub does not provide shell access.
+
+* push change to github
+envy@envy-home-2015:~/.emacs.d/emacs-configuration$ git push
+warning: push.default is unset; its implicit value has changed in
+Git 2.0 from 'matching' to 'simple'. To squelch this message
+and maintain the traditional behavior, use:
+
+  git config --global push.default matching
+
+To squelch this message and adopt the new behavior now, use:
+
+  git config --global push.default simple
+
+When push.default is set to 'matching', git will push local branches
+to the remote branches that already exist with the same name.
+
+Since Git 2.0, Git defaults to the more conservative 'simple'
+behavior, which only pushes the current branch to the corresponding
+remote branch that 'git pull' uses to update the current branch.
+
+See 'git help config' and search for 'push.default' for further information.
+(the 'simple' mode was introduced in Git 1.7.11. Use the similar mode
+'current' instead of 'simple' if you sometimes use older versions of Git)
+
+Username for 'https://github.com': ly008
+Password for 'https://ly008@github.com': github@015
+
+Counting objects: 3, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 1.03 KiB | 0 bytes/s, done.
+Total 3 (delta 0), reused 0 (delta 0)
+To https://github.com/ly008/emacs-configuration.git
+   2dfabf7..ece4056  master -> master
+envy@envy-home-2015:~/.emacs.d/emacs-configuration$ 
